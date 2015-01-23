@@ -61,10 +61,11 @@ $this->params['breadcrumbs'] = [
         <?php foreach ($tasks as $task): ?>
             <th><?= $task ?></th>
         <?php endforeach; ?>
+        <th>Итого</th>
     </tr>
     <?php foreach ($users as $user): ?>
         <tr>
-            <td><?= ++$i ?></td>
+            <td><?= ++$i ?></td> <?php $total = 0;?>
             <td>
                 <?php if ($layout !== 'print'): ?>
                     <?= Html::a($user->name, ['contest/user', 'contestId' => $contest->id, 'userId' => $user->id]) ?>
@@ -74,11 +75,12 @@ $this->params['breadcrumbs'] = [
             </td>
             <?php foreach ($tasks as $tid => $task): ?>
                 <?php if ($s = $user->getSolutionByTask($tid)): ?>
-                    <td><?= $s->score ?></td>
+                    <td><?= $s->score ?> <?php $total += $s->score; ?></td>
                 <?php else: ?>
                     <td>0</td>
                 <?php endif; ?>
             <?php endforeach; ?>
+            <td><?= $total ?></td>
         </tr>
     <?php endforeach; ?>
 </table>

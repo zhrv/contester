@@ -34,7 +34,7 @@ class Checkergroup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tid', 'method'], 'integer'],
+            [['tid', 'method', 'scores'], 'integer'],
             [['name'], 'string', 'max' => 255]
         ];
     }
@@ -49,6 +49,7 @@ class Checkergroup extends \yii\db\ActiveRecord
             'tid' => '',
             'method' => 'Method',
             'name' => 'Name',
+            'scores' => 'Баллы',
         ];
     }
 

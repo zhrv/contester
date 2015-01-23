@@ -35,7 +35,8 @@ class Checkertest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['gid', 'scores'], 'integer'],
+            [['gid'], 'integer'],
+            [['scores'], 'number'],
             [['gid'], 'required'],
             [['infile', 'outfile'], 'file'],
             [['input', 'output'], 'string', 'max' => 255]

@@ -15,16 +15,17 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <!--?= $form->field($model, 'start_at')->textInput() ?-->
-    <?= dosamigos\datetimepicker\DateTimePicker::widget([
+    <!--?= dosamigos\datetimepicker\DateTimePicker::widget([
         'model' => $model,
         'attribute' => 'start_at',
-    ]) ?>
+    ]) ?-->
 
-    <?= dosamigos\datetimepicker\DateTimePicker::widget([
+    <!--?= dosamigos\datetimepicker\DateTimePicker::widget([
         'model' => $model,
         'attribute' => 'finish_at',
-    ]) ?>
+    ]) ?-->
 
+    <?= $form->field($model, 'start_at')->textInput() ?>
     <?= $form->field($model, 'finish_at')->textInput() ?>
 
     <div class="form-group">

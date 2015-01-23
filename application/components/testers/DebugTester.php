@@ -54,9 +54,6 @@ class DebugTester extends BaseTester{
             $outStr .= $str;
         }
 
-
-        //print $cmd.'<br>'.$outStr.'<br>'.$retVar; exit;
-
         $this->testsResult = $outStr;
 
         $this->solution->clearFiles();

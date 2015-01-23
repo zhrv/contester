@@ -57,9 +57,12 @@ class Result extends Widget
 
                     $gr = [];
                     $ok = true;
+                    $notEmpty = false;
                     $gr['tests'] = [];
+                    $gr['score'] = 0;
                     $grScore = 0;
                     foreach ($tests as $test) {
+                        $notEmpty = true;
                         $gr['tests'][] = [
                             'num' => $test->num,
                             'res' => $test->res,
@@ -72,8 +75,15 @@ class Result extends Widget
                             //break;
                         }
                     }
-
-                    $gr['score'] = $ok ? $grScore : 0;
+                    if ($ok && $notEmpty) {
+                        if ($group->method == Checkergroup::METHOD_TOTAL) {
+                            $gr['score'] = $group->scores;
+                        }
+                        else {
+                            $gr['score'] = $grScore;
+                        }
+                    }
+                    //$gr['score'] = $ok ? $grScore : 0;
 
                     $testsArr[] = $gr;
                 }

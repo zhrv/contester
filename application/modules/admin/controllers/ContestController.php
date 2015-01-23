@@ -212,6 +212,7 @@ class ContestController extends Controller
 
                     $gr = [];
                     $ok = true;
+                    $gr['score'] = 0;
                     $gr['tests'] = [];
                     $grScore = 0;
                     foreach ($tests as $test) {
@@ -228,7 +229,15 @@ class ContestController extends Controller
                         }
                     }
 
-                    $gr['score'] = $ok ? $grScore : 0;
+                    if ($ok) {
+                        if ($test->checkertest->checkergroup->method == Checkergroup::METHOD_TOTAL) {
+                            $gr['score'] = $test->checkertest->checkergroup->scores;
+                        }
+                        else {
+                            $gr['score'] = $grScore;
+                        }
+                    }
+                    //$gr['score'] = $ok ? $grScore : 0;
 
                     $testsArr['tests'][] = $gr;
                 }

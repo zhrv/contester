@@ -69,7 +69,7 @@ $this->params['breadcrumbs'] = [
                 },
                 //'value' => 'getScoreCalcMethods()[$data->method]',
             ],
-            //'output',
+            'scores',
 
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -100,6 +100,7 @@ $this->params['breadcrumbs'] = [
             ],
             'input',
             'output',
+            'scores',
 
             [
                 'class' => 'yii\grid\ActionColumn',

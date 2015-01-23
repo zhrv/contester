@@ -130,7 +130,7 @@ class TaskController extends Controller
                     mkdir($dir, 0777, true);
                 }
                 $name = $model->file->baseName . (!empty($model->file->extension) ? ('.' . $model->file->extension) : '');
-                if (file_exists($dir . '/' . $model->checker))
+                if (!empty($model->checker) && file_exists($dir . '/' . $model->checker))
                     unlink($dir . '/' . $model->checker);
                 $model->file->saveAs($dir .'/'. $name);
                 $model->checker = $name;

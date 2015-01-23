@@ -16,6 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'method')->dropDownList($model->getScoreCalcMethods()) ?>
 
+    <?= $form->field($model, 'scores')->textInput(['maxlength' => 30]) ?>
+
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <div class="form-group">

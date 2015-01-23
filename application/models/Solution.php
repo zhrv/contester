@@ -40,7 +40,8 @@ class Solution extends \yii\db\ActiveRecord
             [['uid', 'tid'], 'required'],
             [['uid', 'tid', 'created_at'], 'integer'],
             [['code'], 'string'],
-            [['file', 'hash'], 'string', 'max' => 255]
+            [['file', 'hash'], 'string', 'max' => 255],
+            [['score'], 'number'],
         ];
     }
 
@@ -152,6 +153,7 @@ class Solution extends \yii\db\ActiveRecord
 
         Yii::$app->db->createCommand()->delete('tests', ['sid' => $this->id])->execute();
 
+
         $result = json_decode($json);
         if (!isset($result->status)) {
             throw new Exception('Ошибка выполнения. Проверьте ввод/вывод...');
@@ -173,6 +175,7 @@ class Solution extends \yii\db\ActiveRecord
 
         $totScore = 0;
         $grScores = $this->getGroupsScores();
+
         foreach ($grScores as $gs) {
             $totScore += $gs;
         }
@@ -197,13 +200,18 @@ class Solution extends \yii\db\ActiveRecord
             foreach ($tests as $test) {
                 if ($test->res == Test::RESULT_OK) {
                     $grScore += $test->checkertest->scores;
-                } elseif ($test->checkertest->checkergroup->method == Checkergroup::METHOD_TOTAL) {
+                } elseif ($group->method == Checkergroup::METHOD_TOTAL) {
                     $ok = false;
                     //break;
                 }
             }
             if ($ok) {
-                $arr[$i] = $grScore;
+                if ($group->method == Checkergroup::METHOD_TOTAL) {
+                    $arr[$i] = $group->scores;
+                }
+                else {
+                    $arr[$i] = $grScore;
+                }
             }
             $i++;
         }
