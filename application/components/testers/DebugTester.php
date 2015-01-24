@@ -48,7 +48,7 @@ class DebugTester extends BaseTester{
         $cmd = Yii::getAlias(Yii::$app->params['checkerBin']) .' '. $jsonFile .' '. $dir .' '. $srcFile;// .' > '.$dir.'log.txt';
 
         exec($cmd, $out, $retVar);
-
+        //print_r( $out); exit;
         $outStr = '';
         foreach ($out as $str) {
             $outStr .= $str;

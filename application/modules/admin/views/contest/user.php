@@ -72,7 +72,9 @@ foreach ($tasks as $task) {
     $result .= "<tr><th>ИТОГО</th><td align=\"center\" colspan=\"{$testCnt}\"><strong style=\"color:green; font-size:1.5em;\">{$totalScore}</strong></td></tr>";
     $result .= "<tr><th>hash</th><td align=\"center\" colspan=\"{$testCnt}\">{$task['hash']}</td><tr>";
     $result .= '</table>';
-    $result .= '<p>'.Html::a('Исходный код решения', Url::to(['contest/solution', 'id'=>$task['tests']['solution']->id])).'</p>';
+    $result .= '<p>'.Html::a('Исходный код решения', Url::to(['contest/solution', 'id'=>$task['tests']['solution']->id])) .'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+    $result .= Html::a('Результат проверки', Url::to(['contest/json', 'id'=>$task['tests']['solution']->id])).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+    $result .= Html::a('Перепроверить', Url::to(['contest/check', 'id'=>$task['tests']['solution']->id]),['style' => 'font-weight:bold;color:red;']).'</p>';
     $result .='</div>';
     echo $result;
 }

@@ -13,6 +13,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\components\testers\TesterFactory;
 
 /**
  * ContestController implements the CRUD actions for Contest model.
@@ -161,26 +162,6 @@ class ContestController extends Controller
 
     public function actionUser($contestId, $userId)
     {
-//        $contest = Contest::findOne(['id' => $contestId]);
-//        $user = User::findOne(['id' => $contestId]);
-//        $provider = new ActiveDataProvider([
-//            'query' => Solution::find()
-//                ->where(['uid' => $userId])
-//                ->with('tests')
-//                ->with('task'),
-//            'pagination' => [
-//                'pageSize' => 20,
-//            ],
-//        ]);
-//
-//
-//
-//        return $this->render('user', [
-//            'contest'       => $contest,
-//            'user'          => $user,
-//            'dataProvider'  => $provider,
-//        ]);
-///////////////////////////////////////////////////////////
         $contest = Contest::findOne(['id' => $contestId]);
         $user = User::findOne(['id' => $userId]);
 
@@ -215,7 +196,9 @@ class ContestController extends Controller
                     $gr['score'] = 0;
                     $gr['tests'] = [];
                     $grScore = 0;
+                    $notEmpty = false;
                     foreach ($tests as $test) {
+                        $notEmpty = true;
                         $gr['tests'][] = [
                             'num' => $test->num,
                             'res' => $test->res,
@@ -223,15 +206,15 @@ class ContestController extends Controller
                         if ($test->res == Test::RESULT_OK) {
 
                             $grScore += $test->checkertest->scores;
-                        } elseif ($test->checkertest->checkergroup->method == Checkergroup::METHOD_TOTAL) {
+                        } elseif ($group->method == Checkergroup::METHOD_TOTAL) {
                             $ok = false;
                             //break;
                         }
                     }
 
-                    if ($ok) {
-                        if ($test->checkertest->checkergroup->method == Checkergroup::METHOD_TOTAL) {
-                            $gr['score'] = $test->checkertest->checkergroup->scores;
+                    if ($ok && $notEmpty) {
+                        if ($group->method == Checkergroup::METHOD_TOTAL) {
+                            $gr['score'] = $group->scores;
                         }
                         else {
                             $gr['score'] = $grScore;
@@ -266,6 +249,26 @@ class ContestController extends Controller
         return $this->render('solution', [
             'model' => $model,
         ]);
+    }
+
+    public function actionJson($id) {
+        $model = Solution::findOne($id);
+        return $this->render('json', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionCheck($id) {
+        $solution = Solution::findOne($id);
+        try {
+            $tester = TesterFactory::create($solution);
+            $solution->parseResult($tester->getResult());
+            Yii::$app->getSession()->setFlash('success', 'Решение Решение перепроверено.');
+            return $this->redirect(['user', 'contestId' => $solution->task->cid, 'userId' => $solution->uid]);
+        }
+        catch (Exception $e) {
+            Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
+        }
     }
 
     public function actionTest($id) {

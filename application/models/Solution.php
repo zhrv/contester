@@ -153,6 +153,8 @@ class Solution extends \yii\db\ActiveRecord
 
         Yii::$app->db->createCommand()->delete('tests', ['sid' => $this->id])->execute();
 
+        $pos = strpos($json, '{"status"');
+        $json = substr($json, $pos);
 
         $result = json_decode($json);
         if (!isset($result->status)) {
