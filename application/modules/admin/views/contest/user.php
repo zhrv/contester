@@ -64,15 +64,19 @@ foreach ($tasks as $task) {
         $totalScore += $group['score'];
     }
     $result = '<div class="panel panel-default"><div class="panel-heading"><h4>'. $task['title'] .'</h4></div>';
-    $result .= '<table class="table-bordered">';
+    $result .= '<div class="panel-body"><table class="table-bordered">';
     $result .= '<tr>'. $row1 .'</tr>';
     $result .= '<tr>'. $row2 .'</tr>';
     $result .= '<tr>'. $row3 .'</tr>';
     $result .= '<tr>'. $row4 .'</tr>';
     $result .= "<tr><th>ИТОГО</th><td align=\"center\" colspan=\"{$testCnt}\"><strong style=\"color:green; font-size:1.5em;\">{$totalScore}</strong></td></tr>";
     $result .= "<tr><th>hash</th><td align=\"center\" colspan=\"{$testCnt}\">{$task['hash']}</td><tr>";
-    $result .= '</table>';
-    $result .= '<p>'.Html::a('Исходный код решения', Url::to(['contest/solution', 'id'=>$task['tests']['solution']->id])).'</p>';
-    $result .='</div>';
+    $result .= '</table></div>';
+    $result .= '<div class="panel-footer">';
+    $result .= Html::a('Решение', Url::to(['contest/solution', 'id'=>$task['tests']['solution']->id]),['class' => 'btn btn-success']) .'&nbsp;';
+    $result .= Html::a('Результат проверки', Url::to(['contest/json', 'id'=>$task['tests']['solution']->id]),['class' => 'btn btn-success']) .'&nbsp;';
+    $result .= Html::a('Параметры', Url::to(['contest/config', 'id'=>$task['tests']['solution']->id]),['class' => 'btn btn-primary']) .'&nbsp;';
+    $result .= Html::a('Перепроверить', Url::to(['contest/check', 'id'=>$task['tests']['solution']->id]),['class' => 'btn btn-danger']);
+    $result .='</div></div>';
     echo $result;
 }

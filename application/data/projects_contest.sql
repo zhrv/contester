@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Янв 23 2015 г., 08:52
+-- Время создания: Янв 23 2015 г., 21:01
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.4.35
 
@@ -32,19 +32,32 @@ CREATE TABLE IF NOT EXISTS `checkergroups` (
   `tid` int(11) DEFAULT NULL,
   `method` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `scores` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tid` (`tid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
 --
 -- Дамп данных таблицы `checkergroups`
 --
 
-INSERT INTO `checkergroups` (`id`, `tid`, `method`, `name`) VALUES
-(6, 5, 1, '1'),
-(7, 5, 0, '2'),
-(8, 7, 1, 'Подзадача 1'),
-(9, 7, 1, 'Подзадача 2');
+INSERT INTO `checkergroups` (`id`, `tid`, `method`, `name`, `scores`) VALUES
+(6, 5, 1, '1', NULL),
+(7, 5, 0, '2', NULL),
+(8, 7, 1, 'Подзадача 1', NULL),
+(9, 7, 1, 'Подзадача 2', NULL),
+(10, 8, 1, 'Подзадача 1', 50),
+(11, 8, 0, 'Подзадача 2', 50),
+(12, 9, 1, 'Подзадача 1', 30),
+(13, 9, 1, 'Подзадача 2', 30),
+(14, 9, 1, 'Подзадача 3', 40),
+(15, 10, 1, 'Подзадача 1', 30),
+(16, 10, 1, 'Подзадача 2', 30),
+(17, 10, 1, 'Подзадача 3', 20),
+(18, 10, 1, 'Подзадача 4', 20),
+(19, 11, 0, 'Подзадача 1', 27),
+(20, 11, 0, 'Подзадача 2', 25),
+(21, 11, 0, 'Подзадача 3', 48);
 
 -- --------------------------------------------------------
 
@@ -61,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `checkertests` (
   `output` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `gid` (`gid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=303 ;
 
 --
 -- Дамп данных таблицы `checkertests`
@@ -97,7 +110,151 @@ INSERT INTO `checkertests` (`id`, `gid`, `scores`, `input`, `output`) VALUES
 (39, 9, 1, '12', '12.a'),
 (40, 9, 1, '13', '13.a'),
 (41, 9, 1, '14', '14.a'),
-(42, 9, 1, '15', '15.a');
+(42, 9, 1, '15', '15.a'),
+(43, 10, 3, '01', '01.a'),
+(44, 10, 3, '02', '02.a'),
+(45, 10, 3, '03', '03.a'),
+(46, 10, 3, '04', '04.a'),
+(47, 10, 3, '05', '05.a'),
+(48, 10, 3, '06', '06.a'),
+(49, 10, 3, '07', '07.a'),
+(50, 10, 3, '08', '08.a'),
+(51, 10, 3, '09', '09.a'),
+(52, 10, 3, '10', '10.a'),
+(53, 10, 3, '11', '11.a'),
+(54, 10, 3, '12', '12.a'),
+(55, 10, 3, '13', '13.a'),
+(56, 10, 3, '14', '14.a'),
+(57, 10, 3, '15', '15.a'),
+(58, 10, 3, '16', '16.a'),
+(59, 10, 3, '17', '17.a'),
+(60, 10, 3, '18', '18.a'),
+(61, 10, 3, '19', '19.a'),
+(62, 10, 3, '20', '20.a'),
+(63, 11, 2, '21', '21.a'),
+(64, 11, 2, '22', '22.a'),
+(65, 11, 2, '23', '23.a'),
+(66, 11, 2, '24', '24.a'),
+(67, 11, 2, '25', '25.a'),
+(68, 11, 2, '26', '26.a'),
+(69, 11, 2, '27', '27.a'),
+(70, 11, 2, '28', '28.a'),
+(71, 11, 2, '29', '29.a'),
+(72, 11, 2, '30', '30.a'),
+(73, 11, 2, '31', '31.a'),
+(74, 11, 2, '32', '32.a'),
+(75, 11, 2, '33', '33.a'),
+(76, 11, 2, '34', '34.a'),
+(77, 11, 2, '35', '35.a'),
+(78, 11, 2, '36', '36.a'),
+(79, 11, 2, '37', '37.a'),
+(80, 11, 2, '38', '38.a'),
+(81, 11, 2, '39', '39.a'),
+(82, 11, 2, '40', '40.a'),
+(83, 11, 2, '41', '41.a'),
+(84, 11, 2, '42', '42.a'),
+(85, 11, 2, '43', '43.a'),
+(86, 11, 2, '44', '44.a'),
+(87, 11, 2, '45', '45.a'),
+(204, 12, 0, '01', '01.a'),
+(205, 12, 0, '02', '02.a'),
+(206, 12, 0, '03', '03.a'),
+(207, 12, 0, '04', '04.a'),
+(208, 12, 0, '05', '05.a'),
+(209, 12, 0, '06', '06.a'),
+(210, 12, 0, '07', '07.a'),
+(211, 12, 0, '08', '08.a'),
+(212, 12, 0, '09', '09.a'),
+(213, 12, 0, '10', '10.a'),
+(214, 12, 0, '11', '11.a'),
+(215, 12, 0, '12', '12.a'),
+(216, 12, 0, '13', '13.a'),
+(217, 13, 0, '14', '14.a'),
+(218, 13, 0, '15', '15.a'),
+(219, 13, 0, '16', '16.a'),
+(220, 13, 0, '17', '17.a'),
+(221, 13, 0, '18', '18.a'),
+(222, 13, 0, '19', '19.a'),
+(223, 13, 0, '20', '20.a'),
+(224, 13, 0, '21', '21.a'),
+(225, 13, 0, '22', '22.a'),
+(226, 13, 0, '23', '23.a'),
+(227, 13, 0, '24', '24.a'),
+(228, 13, 0, '25', '25.a'),
+(229, 13, 0, '26', '26.a'),
+(230, 13, 0, '27', '27.a'),
+(231, 13, 0, '28', '28.a'),
+(232, 13, 0, '29', '29.a'),
+(233, 13, 0, '30', '30.a'),
+(234, 14, 0, '31', '31.a'),
+(235, 14, 0, '32', '32.a'),
+(236, 14, 0, '33', '33.a'),
+(237, 14, 0, '34', '34.a'),
+(238, 14, 0, '35', '35.a'),
+(239, 14, 0, '36', '36.a'),
+(240, 14, 0, '37', '37.a'),
+(241, 14, 0, '38', '38.a'),
+(242, 14, 0, '39', '39.a'),
+(243, 14, 0, '40', '40.a'),
+(244, 14, 0, '41', '41.a'),
+(245, 14, 0, '42', '42.a'),
+(246, 14, 0, '43', '43.a'),
+(247, 14, 0, '44', '44.a'),
+(248, 14, 0, '45', '45.a'),
+(249, 14, 0, '46', '46.a'),
+(250, 14, 0, '47', '47.a'),
+(251, 15, 0, '01', '01.a'),
+(252, 15, 0, '02', '02.a'),
+(253, 15, 0, '03', '03.a'),
+(254, 15, 0, '04', '04.a'),
+(255, 15, 0, '05', '05.a'),
+(256, 15, 0, '06', '06.a'),
+(257, 15, 0, '07', '07.a'),
+(258, 15, 0, '08', '08.a'),
+(259, 15, 0, '09', '09.a'),
+(260, 15, 0, '10', '10.a'),
+(261, 16, 0, '11', '11.a'),
+(262, 16, 0, '12', '12.a'),
+(263, 16, 0, '13', '13.a'),
+(264, 16, 0, '14', '14.a'),
+(265, 16, 0, '15', '15.a'),
+(266, 17, 0, '16', '16.a'),
+(267, 17, 0, '17', '17.a'),
+(268, 17, 0, '18', '18.a'),
+(269, 17, 0, '19', '19.a'),
+(270, 17, 0, '20', '20.a'),
+(271, 18, 0, '21', '21.a'),
+(272, 18, 0, '22', '22.a'),
+(273, 18, 0, '23', '23.a'),
+(274, 18, 0, '24', '24.a'),
+(275, 18, 0, '25', '25.a'),
+(276, 18, 0, '26', '26.a'),
+(277, 19, 3, '01', '01.a'),
+(278, 19, 3, '02', '02.a'),
+(279, 19, 3, '03', '03.a'),
+(280, 19, 3, '04', '04.a'),
+(281, 19, 3, '05', '05.a'),
+(282, 19, 3, '06', '06.a'),
+(283, 19, 3, '07', '07.a'),
+(284, 19, 3, '08', '08.a'),
+(285, 19, 3, '09', '09.a'),
+(286, 20, 5, '10', '10.a'),
+(287, 20, 5, '11', '11.a'),
+(288, 20, 5, '12', '12.a'),
+(289, 20, 5, '13', '13.a'),
+(290, 20, 5, '14', '14.a'),
+(291, 21, 4, '15', '15.a'),
+(292, 21, 4, '16', '16.a'),
+(293, 21, 4, '17', '17.a'),
+(294, 21, 4, '18', '18.a'),
+(295, 21, 4, '19', '19.a'),
+(296, 21, 4, '20', '20.a'),
+(297, 21, 4, '21', '21.a'),
+(298, 21, 4, '22', '22.a'),
+(299, 21, 4, '23', '23.a'),
+(300, 21, 4, '24', '24.a'),
+(301, 21, 4, '25', '25.a'),
+(302, 21, 4, '26', '26.a');
 
 -- --------------------------------------------------------
 
@@ -113,40 +270,15 @@ CREATE TABLE IF NOT EXISTS `contests` (
   `finish_at` int(11) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Дамп данных таблицы `contests`
 --
 
 INSERT INTO `contests` (`id`, `name`, `start_at`, `finish_at`, `status`) VALUES
-(1, 'Пробный тур', 0, 2147483647, 1);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `langs`
---
-
-DROP TABLE IF EXISTS `langs`;
-CREATE TABLE IF NOT EXISTS `langs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `compiler` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `extension` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `identifier` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- Дамп данных таблицы `langs`
---
-
-INSERT INTO `langs` (`id`, `name`, `compiler`, `extension`, `identifier`) VALUES
-(1, 'C/C++ (MS Visual Studio)', '"c:\\\\Program Files (x86)\\\\Microsoft Visual Studio 12.0\\\\VC\\\\vcvarsall.bat" & cl /W4 /F268435456 /EHsc /FoRelease /O2 /Fe$2 $1', '.cpp', 'msv_cpp'),
-(2, 'Free Pascal', '"C:\\\\bin\\\\FPC\\\\2.6.4\\\\bin\\\\i386-win32\\\\fpc.exe" $1', '.pas', 'fp_pas'),
-(4, 'GCC C/C++', '"C:\\\\bin\\\\mingw64\\\\bin\\\\x86_64-w64-mingw32-g++.exe" -static -lm -s -x c++ -Wl,--stack=268435456 -O2 -o $2 $1', '.cpp', 'mingw_cpp'),
-(5, 'Delphi', '"C:\\\\bin\\\\FPC\\\\2.6.4\\\\bin\\\\i386-win32\\\\fpc.exe" -Mdelphi $1', '.dpr', 'fp_pas');
+(1, 'Пробный тур', 0, 1, 1),
+(2, 'Региональный этап всероссийской олимпиады школьников по информатике (ПЕРВЫЙ ТУР)', 0, 2147483647, 1);
 
 -- --------------------------------------------------------
 
@@ -170,7 +302,8 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m141213_185845_init', 1421858388),
 ('m150119_172014_checkertests', 1421858388),
 ('m150121_131006_checkergroups', 1421858388),
-('m150122_100830_tests_chid', 1421922580);
+('m150122_100830_tests_chid', 1421922580),
+('m150123_172601_dec_score', 1422038731);
 
 -- --------------------------------------------------------
 
@@ -195,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `solutions` (
   KEY `uid` (`uid`),
   KEY `tid` (`tid`),
   KEY `lid` (`lid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Дамп данных таблицы `solutions`
@@ -204,7 +337,11 @@ CREATE TABLE IF NOT EXISTS `solutions` (
 INSERT INTO `solutions` (`id`, `uid`, `tid`, `lid`, `code`, `file`, `created_at`, `hash`, `score`, `status`, `result`) VALUES
 (3, 1, 5, 2, '{$apptype console} \r\n\r\nvar\r\n	f: TextFile;\r\n	a,b:longint;\r\nbegin\r\n	Assign(f, ''sum.in'');\r\n	Reset(f);\r\n	ReadLn(f,a,b);\r\n	Close(f);\r\n	Assign(f, ''sum.out'');\r\n	Rewrite(f);\r\nif (a+b = 2) then begin Writeln(f,3); end else\r\n	WriteLn(f,a+b);\r\n	Close(f);\r\nend.', NULL, 1421995766, '3d8e340c6e430833657fab73db65dc92', 50, 0, '{"status":"ok","error_msg":"","report":[{"id":13,"result":"bad","time":0,"memory":2854912,"score":0},{"id":14,"result":"ok","time":15,"memory":2867200,"score":5},{"id":15,"result":"ok","time":15,"memory":2850816,"score":5},{"id":16,"result":"ok","time":0,"memory":2859008,"score":5},{"id":17,"result":"ok","time":0,"memory":2846720,"score":5},{"id":18,"result":"ok","time":15,"memory":2863104,"score":5},{"id":19,"result":"ok","time":15,"memory":2863104,"score":5},{"id":20,"result":"ok","time":15,"memory":2850816,"score":5},{"id":21,"result":"ok","time":0,"memory":2854912,"score":5},{"id":22,"result":"ok","time":0,"memory":2859008,"score":5},{"id":23,"result":"ok","time":15,"memory":2863104,"score":10},{"id":24,"result":"ok","time":0,"memory":2859008,"score":10},{"id":25,"result":"ok","time":15,"memory":2863104,"score":10},{"id":26,"result":"ok","time":0,"memory":2867200,"score":10},{"id":27,"result":"ok","time":0,"memory":2854912,"score":10}]}'),
 (4, 2, 5, 1, '#include <fstream>\r\n#include <iostream>\r\nusing namespace std;\r\n\r\nint main() {\r\n    int a, b;\r\n\r\n    ifstream fin("sum.in");\r\n    ofstream fou("sum.out");\r\n\r\n    fin >> a >> b;\r\n\r\n    fou << a + b << endl;\r\n\r\n    return 0;\r\n}\r\n', NULL, 1421943972, '321159ebf36192fa3b9324ae51b4ff04', 100, 0, '{"status":"ok","error_msg":"","report":[{"id":13,"result":"ok","time":0,"memory":2486272,"score":5},{"id":14,"result":"ok","time":0,"memory":2060288,"score":5},{"id":15,"result":"ok","time":15,"memory":2056192,"score":5},{"id":16,"result":"ok","time":0,"memory":2060288,"score":5},{"id":17,"result":"ok","time":0,"memory":2060288,"score":5},{"id":18,"result":"ok","time":15,"memory":2060288,"score":5},{"id":19,"result":"ok","time":0,"memory":2060288,"score":5},{"id":20,"result":"ok","time":15,"memory":2060288,"score":5},{"id":21,"result":"ok","time":15,"memory":2060288,"score":5},{"id":22,"result":"ok","time":15,"memory":2060288,"score":5},{"id":23,"result":"ok","time":15,"memory":2060288,"score":10},{"id":24,"result":"ok","time":0,"memory":2056192,"score":10},{"id":25,"result":"ok","time":15,"memory":2060288,"score":10},{"id":26,"result":"ok","time":15,"memory":2060288,"score":10},{"id":27,"result":"ok","time":0,"memory":2060288,"score":10}]}'),
-(5, 1, 7, 1, '#include <fstream>\r\n#include <iostream>\r\nusing namespace std;\r\n\r\nint main() {\r\n    long long a, b;\r\n\r\n    ifstream fin("sumsqr.in");\r\n    ofstream fou("sumsqr.out");\r\n\r\n    fin >> a >> b;\r\n\r\n    fou << a * a + b * b << endl;\r\n\r\n    return 0;\r\n}\r\n', NULL, 1421999370, '66b0266e76d73f52b666a464040e4c8e', 15, 0, '{"status":"ok","error_msg":"","report":[{"id":28,"result":"ok","time":0,"memory":2486272,"score":1},{"id":29,"result":"ok","time":15,"memory":2056192,"score":1},{"id":30,"result":"ok","time":0,"memory":2056192,"score":1},{"id":31,"result":"ok","time":15,"memory":2056192,"score":1},{"id":32,"result":"ok","time":15,"memory":2056192,"score":1},{"id":33,"result":"ok","time":15,"memory":2052096,"score":1},{"id":34,"result":"ok","time":15,"memory":2056192,"score":1},{"id":35,"result":"ok","time":0,"memory":2056192,"score":1},{"id":36,"result":"ok","time":0,"memory":2056192,"score":1},{"id":37,"result":"ok","time":15,"memory":2056192,"score":1},{"id":38,"result":"ok","time":0,"memory":2056192,"score":1},{"id":39,"result":"ok","time":0,"memory":2056192,"score":1},{"id":40,"result":"ok","time":0,"memory":2056192,"score":1},{"id":41,"result":"ok","time":0,"memory":2056192,"score":1},{"id":42,"result":"ok","time":0,"memory":2052096,"score":1}]}');
+(5, 1, 7, 1, '#include <fstream>\r\n#include <iostream>\r\nusing namespace std;\r\n\r\nint main() {\r\n    long long a, b;\r\n\r\n    ifstream fin("sumsqr.in");\r\n    ofstream fou("sumsqr.out");\r\n\r\n    fin >> a >> b;\r\n\r\n    fou << a * a + b * b << endl;\r\n\r\n    return 0;\r\n}\r\n', NULL, 1421999370, '66b0266e76d73f52b666a464040e4c8e', 15, 0, '{"status":"ok","error_msg":"","report":[{"id":28,"result":"ok","time":0,"memory":2486272,"score":1},{"id":29,"result":"ok","time":15,"memory":2056192,"score":1},{"id":30,"result":"ok","time":0,"memory":2056192,"score":1},{"id":31,"result":"ok","time":15,"memory":2056192,"score":1},{"id":32,"result":"ok","time":15,"memory":2056192,"score":1},{"id":33,"result":"ok","time":15,"memory":2052096,"score":1},{"id":34,"result":"ok","time":15,"memory":2056192,"score":1},{"id":35,"result":"ok","time":0,"memory":2056192,"score":1},{"id":36,"result":"ok","time":0,"memory":2056192,"score":1},{"id":37,"result":"ok","time":15,"memory":2056192,"score":1},{"id":38,"result":"ok","time":0,"memory":2056192,"score":1},{"id":39,"result":"ok","time":0,"memory":2056192,"score":1},{"id":40,"result":"ok","time":0,"memory":2056192,"score":1},{"id":41,"result":"ok","time":0,"memory":2056192,"score":1},{"id":42,"result":"ok","time":0,"memory":2052096,"score":1}]}'),
+(6, 1, 8, 4, '#include <fstream>\r\n#include <iostream>\r\nusing namespace std;\r\n\r\nint main() {\r\n    int a, b, c, d;\r\n\r\n    ifstream fin("hall.in");\r\n    ofstream fou("hall.out");\r\n\r\n    fin >> a >> b >> c >> d;\r\n\r\n    long long ans = 0;\r\n    for (int x = 1; x <= d / 2 && x * x <= b; x++) {\r\n        int miny = x;\r\n        if ((c + 1) / 2 - x > miny) {\r\n            miny = (c + 1) / 2 - x;\r\n        }\r\n        if ((a + x - 1) / x > miny) {\r\n            miny = (a + x - 1) / x;\r\n        }\r\n        int maxy = d / 2 - x;\r\n        if (b / x < maxy) {\r\n            maxy = b / x;\r\n        }\r\n        if (maxy >= miny) {\r\n            ans += maxy - miny + 1;\r\n        }\r\n    }\r\n    fou << ans << endl;\r\n\r\n    return 0;\r\n}\r\n', NULL, 1422045599, '40330bd984a719eeba791072e4c2e590', 100, 0, '{"status":"ok","error_msg":"","report":[{"id":43,"result":"ok","time":0,"memory":1851392,"score":3},{"id":44,"result":"ok","time":15,"memory":1851392,"score":3},{"id":45,"result":"ok","time":15,"memory":1851392,"score":3},{"id":46,"result":"ok","time":0,"memory":1851392,"score":3},{"id":47,"result":"ok","time":0,"memory":1851392,"score":3},{"id":48,"result":"ok","time":0,"memory":1851392,"score":3},{"id":49,"result":"ok","time":0,"memory":1851392,"score":3},{"id":50,"result":"ok","time":0,"memory":1855488,"score":3},{"id":51,"result":"ok","time":0,"memory":1851392,"score":3},{"id":52,"result":"ok","time":0,"memory":1851392,"score":3},{"id":53,"result":"ok","time":15,"memory":1851392,"score":3},{"id":54,"result":"ok","time":0,"memory":1851392,"score":3},{"id":55,"result":"ok","time":0,"memory":1855488,"score":3},{"id":56,"result":"ok","time":0,"memory":1851392,"score":3},{"id":57,"result":"ok","time":0,"memory":1855488,"score":3},{"id":58,"result":"ok","time":0,"memory":1851392,"score":3},{"id":59,"result":"ok","time":0,"memory":1851392,"score":3},{"id":60,"result":"ok","time":0,"memory":1851392,"score":3},{"id":61,"result":"ok","time":0,"memory":1851392,"score":3},{"id":62,"result":"ok","time":0,"memory":1851392,"score":3},{"id":63,"result":"ok","time":15,"memory":1851392,"score":2},{"id":64,"result":"ok","time":15,"memory":1851392,"score":2},{"id":65,"result":"ok","time":15,"memory":1851392,"score":2},{"id":66,"result":"ok","time":0,"memory":1851392,"score":2},{"id":67,"result":"ok","time":0,"memory":1855488,"score":2},{"id":68,"result":"ok","time":15,"memory":1851392,"score":2},{"id":69,"result":"ok","time":0,"memory":1851392,"score":2},{"id":70,"result":"ok","time":15,"memory":1851392,"score":2},{"id":71,"result":"ok","time":0,"memory":1855488,"score":2},{"id":72,"result":"ok","time":0,"memory":1851392,"score":2},{"id":73,"result":"ok","time":0,"memory":1851392,"score":2},{"id":74,"result":"ok","time":0,"memory":1851392,"score":2},{"id":75,"result":"ok","time":0,"memory":1851392,"score":2},{"id":76,"result":"ok","time":0,"memory":1851392,"score":2},{"id":77,"result":"ok","time":0,"memory":1851392,"score":2},{"id":78,"result":"ok","time":0,"memory":1851392,"score":2},{"id":79,"result":"ok","time":15,"memory":1851392,"score":2},{"id":80,"result":"ok","time":15,"memory":1851392,"score":2},{"id":81,"result":"ok","time":0,"memory":1851392,"score":2},{"id":82,"result":"ok","time":15,"memory":1851392,"score":2},{"id":83,"result":"ok","time":0,"memory":1855488,"score":2},{"id":84,"result":"ok","time":0,"memory":1851392,"score":2},{"id":85,"result":"ok","time":15,"memory":1851392,"score":2},{"id":86,"result":"ok","time":15,"memory":1851392,"score":2},{"id":87,"result":"ok","time":0,"memory":1851392,"score":2}]}'),
+(7, 1, 9, 4, '#include <stdio.h>\r\n#include <fstream>\r\n#include <iostream>\r\n#include <cmath>\r\n\r\n#ifdef WIN32\r\n#define I64 "%I64d"\r\n#else\r\n#define I64 "%lld"\r\n#endif\r\n\r\nusing namespace std;\r\n\r\n#define MAXN 1000002\r\n\r\nint a[MAXN];\r\nlong long s[MAXN], pref[MAXN], suff[MAXN];\r\n\r\nint main(void) {\r\n    freopen("prizes.in", "r", stdin);\r\n    freopen("prizes.out", "w", stdout);\r\n\r\n    int n, k;\r\n    scanf("%d %d", &n, &k);\r\n\r\n    for (int i = 0; i < n; i++) {\r\n        scanf("%d", &a[i]);\r\n        s[i + 1] = s[i] + a[i];\r\n    }\r\n\r\n    for (int i = k - 1; i < n; i++) {\r\n        pref[i + 1] = max(pref[i], s[i + 1] - s[i - k + 1]);\r\n    }\r\n\r\n    for (int i = n - k; i > 0; i--) {\r\n        suff[i] = max(suff[i + 1], s[i + k]  - s[i]);\r\n    }\r\n\r\n    long long best = 2e18;\r\n    for (int i = 0; i < n - k + 1; i++) {\r\n        best = min(best, max(pref[i], suff[i + k]));\r\n    }\r\n\r\n    printf(I64"\\n", best);\r\n\r\n    return 0;\r\n}\r\n', NULL, 1422045628, '93b5110d9970389e0160e578e5c0f35c', 100, 0, '{"status":"ok","error_msg":"","report":[{"id":204,"result":"ok","time":15,"memory":1835008,"score":0},{"id":205,"result":"ok","time":0,"memory":1835008,"score":0},{"id":206,"result":"ok","time":0,"memory":1835008,"score":0},{"id":207,"result":"ok","time":0,"memory":1835008,"score":0},{"id":208,"result":"ok","time":0,"memory":1835008,"score":0},{"id":209,"result":"ok","time":0,"memory":1835008,"score":0},{"id":210,"result":"ok","time":0,"memory":1835008,"score":0},{"id":211,"result":"ok","time":15,"memory":1835008,"score":0},{"id":212,"result":"ok","time":0,"memory":1835008,"score":0},{"id":213,"result":"ok","time":0,"memory":1835008,"score":0},{"id":214,"result":"ok","time":0,"memory":1835008,"score":0},{"id":215,"result":"ok","time":0,"memory":1835008,"score":0},{"id":216,"result":"ok","time":0,"memory":1835008,"score":0},{"id":217,"result":"ok","time":0,"memory":1970176,"score":0},{"id":218,"result":"ok","time":0,"memory":1970176,"score":0},{"id":219,"result":"ok","time":0,"memory":1970176,"score":0},{"id":220,"result":"ok","time":0,"memory":1970176,"score":0},{"id":221,"result":"ok","time":15,"memory":1970176,"score":0},{"id":222,"result":"ok","time":15,"memory":1970176,"score":0},{"id":223,"result":"ok","time":15,"memory":1970176,"score":0},{"id":224,"result":"ok","time":15,"memory":1970176,"score":0},{"id":225,"result":"ok","time":15,"memory":1970176,"score":0},{"id":226,"result":"ok","time":0,"memory":1974272,"score":0},{"id":227,"result":"ok","time":0,"memory":1970176,"score":0},{"id":228,"result":"ok","time":15,"memory":1970176,"score":0},{"id":229,"result":"ok","time":0,"memory":1970176,"score":0},{"id":230,"result":"ok","time":15,"memory":1970176,"score":0},{"id":231,"result":"ok","time":15,"memory":1970176,"score":0},{"id":232,"result":"ok","time":0,"memory":1970176,"score":0},{"id":233,"result":"ok","time":0,"memory":1970176,"score":0},{"id":234,"result":"ok","time":31,"memory":4632576,"score":0},{"id":235,"result":"ok","time":30,"memory":4632576,"score":0},{"id":236,"result":"ok","time":31,"memory":4632576,"score":0},{"id":237,"result":"ok","time":30,"memory":4632576,"score":0},{"id":238,"result":"ok","time":31,"memory":4632576,"score":0},{"id":239,"result":"ok","time":31,"memory":4632576,"score":0},{"id":240,"result":"ok","time":31,"memory":4632576,"score":0},{"id":241,"result":"ok","time":15,"memory":4632576,"score":0},{"id":242,"result":"ok","time":31,"memory":4632576,"score":0},{"id":243,"result":"ok","time":46,"memory":4632576,"score":0},{"id":244,"result":"ok","time":31,"memory":2998272,"score":0},{"id":245,"result":"ok","time":31,"memory":4632576,"score":0},{"id":246,"result":"ok","time":15,"memory":4632576,"score":0},{"id":247,"result":"ok","time":31,"memory":4632576,"score":0},{"id":248,"result":"ok","time":31,"memory":4632576,"score":0},{"id":249,"result":"ok","time":46,"memory":4632576,"score":0},{"id":250,"result":"ok","time":31,"memory":4632576,"score":0}]}'),
+(8, 1, 10, 4, '#include <iostream>\r\n#include <climits>\r\n#include <algorithm>\r\n#include <vector>\r\n#include <cstdio>\r\nusing namespace std;\r\n\r\n#ifdef WIN32\r\n#define I64 "%I64d"\r\n#else\r\n#define I64 "%lld"\r\n#endif\r\n\r\nconst int MAXN = 300031;\r\n\r\n\r\nconst int NEUTRAL_VALUE = INT_MIN;\r\nconst int NEUTRAL_DELTA = 0;\r\n\r\nint joinValues(int leftValue, int rightValue) {\r\n  return max(leftValue, rightValue);\r\n}\r\n\r\nint joinDeltas(int oldDelta, int newDelta) {\r\n  return oldDelta + newDelta;\r\n}\r\n\r\nint joinValueWithDelta(int value, int delta, int length) {\r\n  return value + delta;\r\n}\r\n\r\nstruct treap {\r\n  int nodeValue;\r\n  int subTreeValue;\r\n  int delta;\r\n  int count;\r\n  int prio;\r\n  treap *l;\r\n  treap *r;\r\n};\r\n\r\ntreap nodes[MAXN];\r\nint nodes_cnt;\r\nvector<int> rnd;\r\n\r\nstatic int getCount(treap* root) {\r\n  return root ? root->count : 0;\r\n}\r\n\r\nstatic int getSubTreeValue(treap* root) {\r\n  return root ? root->subTreeValue : NEUTRAL_VALUE;\r\n}\r\n\r\nvoid update(treap *root) {\r\n  if (!root) return;\r\n  root->subTreeValue = joinValues(joinValues(getSubTreeValue(root->l), root->nodeValue), getSubTreeValue(root->r));\r\n  root->count = 1 + getCount(root->l) + getCount(root->r);\r\n}\r\n\r\nvoid applyDelta(treap *root, int delta) {\r\n  if (!root) return;\r\n  root->delta = joinDeltas(root->delta, delta);\r\n  root->nodeValue = joinValueWithDelta(root->nodeValue, delta, 1);\r\n  root->subTreeValue = joinValueWithDelta(root->subTreeValue, delta, root->count);\r\n}\r\n\r\nvoid pushDelta(treap* root) {\r\n  if (!root) return;\r\n  applyDelta(root->l, root->delta);\r\n  applyDelta(root->r, root->delta);\r\n  root->delta = NEUTRAL_DELTA;\r\n}\r\n\r\nvoid merge(treap* &t, treap* l, treap* r) {\r\n  pushDelta(l);\r\n  pushDelta(r);\r\n  if (!l)\r\n    t = r;\r\n  else if (!r)\r\n    t = l;\r\n  else if (l->prio < r->prio)\r\n    merge(l->r, l->r, r), t = l;\r\n  else\r\n    merge(r->l, l, r->l), t = r;\r\n  update(t);\r\n}\r\n\r\nvoid split(treap* t, treap* &l, treap* &r, int key) {\r\n  pushDelta(t);\r\n  if (!t)\r\n    l = r = NULL;\r\n  else if (key <= getCount(t->l))\r\n    split(t->l, l, t->l, key), r = t;\r\n  else\r\n    split(t->r, t->r, r, key - getCount(t->l) - 1), l = t;\r\n  update(t);\r\n}\r\n\r\nint get(treap* t, int index) {\r\n  pushDelta(t);\r\n  if (index < getCount(t->l))\r\n    return get(t->l, index);\r\n  else if (index > getCount(t->l))\r\n    return get(t->r, index - getCount(t->l) - 1);\r\n  return t->nodeValue;\r\n}\r\n\r\nvoid insert(treap* &t, treap* item, int index) {\r\n  pushDelta(t);\r\n  if (!t)\r\n    t = item;\r\n  else if (item->prio < t->prio)\r\n    split(t, item->l, item->r, index), t = item;\r\n  else if (index <= getCount(t->l))\r\n    insert(t->l, item, index);\r\n  else\r\n    insert(t->r, item, index - getCount(t->l) - 1);\r\n  update(t);\r\n}\r\n\r\nvoid insert(treap* &root, int index, int value) {\r\n  treap *item = &nodes[nodes_cnt];\r\n  item->nodeValue = value;\r\n  item->subTreeValue = value;\r\n  item->delta = NEUTRAL_DELTA;\r\n  item->count = 1;\r\n  item->prio = rnd[nodes_cnt];\r\n  ++nodes_cnt;\r\n  insert(root, item, index);\r\n}\r\n\r\nvoid remove(treap* &t, int index) {\r\n  pushDelta(t);\r\n  if (index == getCount(t->l))\r\n    merge(t, t->l, t->r);\r\n  else\r\n    if (index < getCount(t->l))\r\n      remove(t->l, index);\r\n    else\r\n      remove(t->r, index - getCount(t->l) - 1);\r\n  update(t);\r\n}\r\n\r\nint query(treap* &root, int a, int b) {\r\n  treap *l1, *r1;\r\n  split(root, l1, r1, b + 1);\r\n  treap *l2, *r2;\r\n  split(l1, l2, r2, a);\r\n  int res = getSubTreeValue(r2);\r\n  treap *t;\r\n  merge(t, l2, r2);\r\n  merge(root, t, r1);\r\n  return res;\r\n}\r\n\r\nvoid modify(treap* &root, int a, int b, int delta) {\r\n  treap *l1, *r1;\r\n  split(root, l1, r1, b + 1);\r\n  treap *l2, *r2;\r\n  split(l1, l2, r2, a);\r\n  applyDelta(r2, delta);\r\n  treap *t;\r\n  merge(t, l2, r2);\r\n  merge(root, t, r1);\r\n}\r\n\r\nvoid print(treap* t) {\r\n  if (!t) return;\r\n  pushDelta(t);\r\n  print(t->l);\r\n  cout << t->nodeValue << " ";\r\n  print(t->r);\r\n}\r\n\r\nlong long arr[MAXN];\r\nint main() {\r\n  freopen("river.in", "r", stdin);\r\n  freopen("river.out", "w", stdout);\r\n  for (int i = 0; i < MAXN; i++)\r\n    rnd.push_back(i);\r\n  random_shuffle(rnd.begin(), rnd.end());\r\n  int n, subtask;\r\n  cin >> n >> subtask;\r\n  treap* t = NULL;\r\n  long long ans = 0;\r\n  long long xx;\r\n  for (int i = 0; i < n; i++) {\r\n    scanf(I64, &xx);\r\n    ans += xx * xx;\r\n    arr[i] = xx;\r\n    insert(t, i, i);\r\n  }\r\n          \r\n  int m;\r\n  cin >> m;\r\n  int e, v;\r\n  long long x; \r\n  int l, r; \r\n  int j;\r\n  printf(I64"\\n", ans); \r\n  int cnt = n; \r\n  for (int i = 0; i < m; i++) {\r\n    scanf("%d%d", &e, &v);\r\n    v--;\r\n    j = get(t, v);\r\n    x = arr[j];\r\n    ans -= x * x;\r\n    \r\n    if (e == 1) remove(t, v);\r\n           \r\n    if (e == 1) {\r\n      if (v == 0) {\r\n        r = get(t, 0);\r\n    ans -= arr[r] * arr[r];\r\n    arr[r] += x;\r\n    ans += (arr[r]) * (arr[r]);\r\n      } else {\r\n    //cerr << v << " " << getCount(t    );\r\n        if (v == getCount(t)) {\r\n          l = get(t, v - 1);\r\n          ans -= arr[l] * arr[l];\r\n      arr[l] += x;\r\n      ans += (arr[l]) * (arr[l]);\r\n        } else {\r\n          r = get(t, v);\r\n\r\n      ans -= arr[r] * arr[r];\r\n      arr[r] += x / 2 + x % 2;\r\n      ans += (arr[r]) * (arr[r]);\r\n                                                            \r\n          l = get(t, v - 1);\r\n          ans -= arr[l] * arr[l];\r\n      arr[l] += x / 2;\r\n      ans += (arr[l]) * (arr[l]);\r\n        }\r\n      }\r\n    } else {\r\n      arr[j] = (x / 2);\r\n      arr[cnt++] = (x / 2 + x % 2); \r\n      ans += (x / 2 + x % 2) * (x / 2 + x % 2);\r\n      ans += (x / 2) * (x / 2);\r\n      insert(t, v + 1, cnt - 1);\r\n      //insert(t, v, j);\r\n    }                 \r\n    printf(I64"\\n", ans);  \r\n  }\r\n}', NULL, 1422044080, 'e6806b03554c881d680ca374f3f549bf', 100, 0, '{"status":"ok","error_msg":"","report":[{"id":251,"result":"ok","time":15,"memory":4931584,"score":0},{"id":252,"result":"ok","time":15,"memory":4931584,"score":0},{"id":253,"result":"ok","time":15,"memory":4931584,"score":0},{"id":254,"result":"ok","time":15,"memory":4927488,"score":0},{"id":255,"result":"ok","time":31,"memory":4931584,"score":0},{"id":256,"result":"ok","time":15,"memory":4931584,"score":0},{"id":257,"result":"ok","time":15,"memory":4927488,"score":0},{"id":258,"result":"ok","time":31,"memory":4927488,"score":0},{"id":259,"result":"ok","time":15,"memory":4927488,"score":0},{"id":260,"result":"ok","time":15,"memory":4931584,"score":0},{"id":261,"result":"ok","time":843,"memory":13725696,"score":0},{"id":262,"result":"ok","time":921,"memory":11321344,"score":0},{"id":263,"result":"ok","time":999,"memory":11317248,"score":0},{"id":264,"result":"ok","time":890,"memory":11321344,"score":0},{"id":265,"result":"ok","time":890,"memory":11321344,"score":0},{"id":266,"result":"ok","time":812,"memory":8925184,"score":0},{"id":267,"result":"ok","time":858,"memory":8925184,"score":0},{"id":268,"result":"ok","time":750,"memory":8925184,"score":0},{"id":269,"result":"ok","time":843,"memory":8925184,"score":0},{"id":270,"result":"ok","time":952,"memory":8925184,"score":0},{"id":271,"result":"ok","time":968,"memory":13725696,"score":0},{"id":272,"result":"ok","time":843,"memory":11321344,"score":0},{"id":273,"result":"ok","time":858,"memory":11321344,"score":0},{"id":274,"result":"ok","time":905,"memory":11329536,"score":0},{"id":275,"result":"ok","time":921,"memory":11329536,"score":0},{"id":276,"result":"ok","time":812,"memory":13406208,"score":0}]}'),
+(9, 1, 11, 4, '#include <fstream>\r\n#include <iostream>\r\n#include <string>\r\n#include <cstdio>\r\n#include <vector>\r\n#include <algorithm>\r\n#include <map>\r\n#include <cassert>\r\n\r\nusing namespace std;\r\n\r\nint main()\r\n{\r\n    ifstream cin("search.in");\r\n    ofstream cout("search.out");\r\n    int n, k, subtask;\r\n\r\n    cin >> n >> subtask;\r\n    if (n == 2) {\r\n        cout << "0\\n1\\n0\\n0\\n";\r\n        return 0;\r\n    }\r\n    if (n == 4) {\r\n        cout << "0\\n4\\n3\\n0\\n2\\n1\\n";\r\n        return 0;\r\n    }\r\n    assert(1 <= n && n <= 100000);\r\n\r\n    map<string, int> filter;\r\n    for (int i = 0; i < n; i++)\r\n    {\r\n        string s;\r\n        cin >> s;\r\n        assert(s[0] != ''*'' && s[s.length() - 1] != ''*'');\r\n        if (filter.count(s)) filter[s]++;\r\n        else filter[s] = 1;\r\n    }\r\n\r\n    cin >> k;\r\n    assert(1 <= k && k <= 100000);\r\n\r\n    for (int i = 0; i < k; i++)\r\n    {\r\n        string s;\r\n        cin >> s;\r\n        cout << filter[s] << "\\n";\r\n    }\r\n}\r\n', NULL, 1422045960, '80fbf854a4bb5a6ba0b0b86ae66af7c8', 25, 0, '{"status":"ok","error_msg":"","report":[{"id":277,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":278,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":279,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":280,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":281,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":282,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":283,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":284,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":285,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":286,"result":"ok","time":186,"memory":13709312,"score":5},{"id":287,"result":"ok","time":46,"memory":2293760,"score":5},{"id":288,"result":"ok","time":62,"memory":2256896,"score":5},{"id":289,"result":"ok","time":93,"memory":6250496,"score":5},{"id":290,"result":"ok","time":62,"memory":2256896,"score":5},{"id":291,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":292,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":293,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":294,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":295,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":296,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":297,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":298,"result":"tle","time":4294967295,"memory":2490368,"score":0},{"id":299,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":300,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":301,"result":"crash","time":4294967295,"memory":4294967295,"score":0},{"id":302,"result":"crash","time":4294967295,"memory":4294967295,"score":0}]}');
 
 -- --------------------------------------------------------
 
@@ -225,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `memory_limit` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cid` (`cid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Дамп данных таблицы `tasks`
@@ -233,7 +370,11 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 
 INSERT INTO `tasks` (`id`, `cid`, `title`, `content`, `input`, `output`, `checker`, `time_limit`, `memory_limit`) VALUES
 (5, 1, 'W', 'Задача W', 'sum.in', 'sum.out', 'check.exe', '999999', '3145728000'),
-(7, 1, 'X', 'Task X', 'sumsqr.in', 'sumsqr.out', 'check.exe', '999999', '3145728000');
+(7, 1, 'X', 'Task X', 'sumsqr.in', 'sumsqr.out', 'check.exe', '999999', '3145728000'),
+(8, 2, 'Задача 1 "Выбор зала"', '-', 'hall.in', 'hall.out', 'check.exe', '2000', '268435456'),
+(9, 2, 'Задача 2 "Призы"', '-', 'prizes.in', 'prizes.out', 'check.exe', '2000', '268435456'),
+(10, 2, 'Задача 3 "Река"', '-', 'river.in', 'river.out', 'check.exe', '2000', '268435456'),
+(11, 2, 'Задача 4 "Чемпионат по поиску в сети Меганет"', '-', 'search.in', 'search.out', 'check.exe', '2000', '268435456');
 
 -- --------------------------------------------------------
 
@@ -251,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `tests` (
   PRIMARY KEY (`id`),
   KEY `sid` (`sid`),
   KEY `cid` (`cid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=809 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1909 ;
 
 --
 -- Дамп данных таблицы `tests`
@@ -302,7 +443,151 @@ INSERT INTO `tests` (`id`, `sid`, `num`, `res`, `cid`) VALUES
 (805, 5, 12, 0, 39),
 (806, 5, 13, 0, 40),
 (807, 5, 14, 0, 41),
-(808, 5, 15, 0, 42);
+(808, 5, 15, 0, 42),
+(1488, 8, 1, 0, 251),
+(1489, 8, 2, 0, 252),
+(1490, 8, 3, 0, 253),
+(1491, 8, 4, 0, 254),
+(1492, 8, 5, 0, 255),
+(1493, 8, 6, 0, 256),
+(1494, 8, 7, 0, 257),
+(1495, 8, 8, 0, 258),
+(1496, 8, 9, 0, 259),
+(1497, 8, 10, 0, 260),
+(1498, 8, 11, 0, 261),
+(1499, 8, 12, 0, 262),
+(1500, 8, 13, 0, 263),
+(1501, 8, 14, 0, 264),
+(1502, 8, 15, 0, 265),
+(1503, 8, 16, 0, 266),
+(1504, 8, 17, 0, 267),
+(1505, 8, 18, 0, 268),
+(1506, 8, 19, 0, 269),
+(1507, 8, 20, 0, 270),
+(1508, 8, 21, 0, 271),
+(1509, 8, 22, 0, 272),
+(1510, 8, 23, 0, 273),
+(1511, 8, 24, 0, 274),
+(1512, 8, 25, 0, 275),
+(1513, 8, 26, 0, 276),
+(1791, 6, 1, 0, 43),
+(1792, 6, 2, 0, 44),
+(1793, 6, 3, 0, 45),
+(1794, 6, 4, 0, 46),
+(1795, 6, 5, 0, 47),
+(1796, 6, 6, 0, 48),
+(1797, 6, 7, 0, 49),
+(1798, 6, 8, 0, 50),
+(1799, 6, 9, 0, 51),
+(1800, 6, 10, 0, 52),
+(1801, 6, 11, 0, 53),
+(1802, 6, 12, 0, 54),
+(1803, 6, 13, 0, 55),
+(1804, 6, 14, 0, 56),
+(1805, 6, 15, 0, 57),
+(1806, 6, 16, 0, 58),
+(1807, 6, 17, 0, 59),
+(1808, 6, 18, 0, 60),
+(1809, 6, 19, 0, 61),
+(1810, 6, 20, 0, 62),
+(1811, 6, 21, 0, 63),
+(1812, 6, 22, 0, 64),
+(1813, 6, 23, 0, 65),
+(1814, 6, 24, 0, 66),
+(1815, 6, 25, 0, 67),
+(1816, 6, 26, 0, 68),
+(1817, 6, 27, 0, 69),
+(1818, 6, 28, 0, 70),
+(1819, 6, 29, 0, 71),
+(1820, 6, 30, 0, 72),
+(1821, 6, 31, 0, 73),
+(1822, 6, 32, 0, 74),
+(1823, 6, 33, 0, 75),
+(1824, 6, 34, 0, 76),
+(1825, 6, 35, 0, 77),
+(1826, 6, 36, 0, 78),
+(1827, 6, 37, 0, 79),
+(1828, 6, 38, 0, 80),
+(1829, 6, 39, 0, 81),
+(1830, 6, 40, 0, 82),
+(1831, 6, 41, 0, 83),
+(1832, 6, 42, 0, 84),
+(1833, 6, 43, 0, 85),
+(1834, 6, 44, 0, 86),
+(1835, 6, 45, 0, 87),
+(1836, 7, 1, 0, 204),
+(1837, 7, 2, 0, 205),
+(1838, 7, 3, 0, 206),
+(1839, 7, 4, 0, 207),
+(1840, 7, 5, 0, 208),
+(1841, 7, 6, 0, 209),
+(1842, 7, 7, 0, 210),
+(1843, 7, 8, 0, 211),
+(1844, 7, 9, 0, 212),
+(1845, 7, 10, 0, 213),
+(1846, 7, 11, 0, 214),
+(1847, 7, 12, 0, 215),
+(1848, 7, 13, 0, 216),
+(1849, 7, 14, 0, 217),
+(1850, 7, 15, 0, 218),
+(1851, 7, 16, 0, 219),
+(1852, 7, 17, 0, 220),
+(1853, 7, 18, 0, 221),
+(1854, 7, 19, 0, 222),
+(1855, 7, 20, 0, 223),
+(1856, 7, 21, 0, 224),
+(1857, 7, 22, 0, 225),
+(1858, 7, 23, 0, 226),
+(1859, 7, 24, 0, 227),
+(1860, 7, 25, 0, 228),
+(1861, 7, 26, 0, 229),
+(1862, 7, 27, 0, 230),
+(1863, 7, 28, 0, 231),
+(1864, 7, 29, 0, 232),
+(1865, 7, 30, 0, 233),
+(1866, 7, 31, 0, 234),
+(1867, 7, 32, 0, 235),
+(1868, 7, 33, 0, 236),
+(1869, 7, 34, 0, 237),
+(1870, 7, 35, 0, 238),
+(1871, 7, 36, 0, 239),
+(1872, 7, 37, 0, 240),
+(1873, 7, 38, 0, 241),
+(1874, 7, 39, 0, 242),
+(1875, 7, 40, 0, 243),
+(1876, 7, 41, 0, 244),
+(1877, 7, 42, 0, 245),
+(1878, 7, 43, 0, 246),
+(1879, 7, 44, 0, 247),
+(1880, 7, 45, 0, 248),
+(1881, 7, 46, 0, 249),
+(1882, 7, 47, 0, 250),
+(1883, 9, 1, 3, 277),
+(1884, 9, 2, 3, 278),
+(1885, 9, 3, 3, 279),
+(1886, 9, 4, 3, 280),
+(1887, 9, 5, 3, 281),
+(1888, 9, 6, 3, 282),
+(1889, 9, 7, 3, 283),
+(1890, 9, 8, 3, 284),
+(1891, 9, 9, 3, 285),
+(1892, 9, 10, 0, 286),
+(1893, 9, 11, 0, 287),
+(1894, 9, 12, 0, 288),
+(1895, 9, 13, 0, 289),
+(1896, 9, 14, 0, 290),
+(1897, 9, 15, 3, 291),
+(1898, 9, 16, 3, 292),
+(1899, 9, 17, 3, 293),
+(1900, 9, 18, 3, 294),
+(1901, 9, 19, 3, 295),
+(1902, 9, 20, 3, 296),
+(1903, 9, 21, 3, 297),
+(1904, 9, 22, 1, 298),
+(1905, 9, 23, 3, 299),
+(1906, 9, 24, 3, 300),
+(1907, 9, 25, 3, 301),
+(1908, 9, 26, 3, 302);
 
 -- --------------------------------------------------------
 

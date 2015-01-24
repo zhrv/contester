@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = $model->title;
 $this->params['menu'] = [
     // Important: you need to specify url as 'controller/action',
-    ['label' => 'Задачи'],
+    ['label' => 'Задачи', 'url' => ['contest/view', 'id' => $model->contest->id]],
     ['label' => 'Результаты', 'url' => ['contest/users', 'id' => $model->contest->id]],
     ['label' => 'Хеш-коды', 'url' => ['contest/users', 'id' => $model->contest->id, 'action' => 'hash',]],
     //  ['label' => 'Участники ('.$contest->name.')'],

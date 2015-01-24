@@ -7,8 +7,12 @@
 
 namespace app\commands;
 
+use app\components\testers\TesterFactory;
+use app\models\Solution;
 use app\models\User;
+use yii\base\ErrorException;
 use yii\console\Controller;
+use yii\base\Exception;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -50,6 +54,39 @@ class HelloController extends Controller
 
     }
 
+    public function actionFirsttour() {
+        $rooms = [110, 111, 112, 201, 202, 205, 207, 302];
 
+        foreach ($rooms as $class) {
+            for ($i = 1; $i < 50; $i++) {
+                $user = new User();
+                $name = 'user_'.$class.'_' . $i;
+                $user->login = $name;
+                $user->pass = substr(md5($name), 2, 6);
+                $user->name = $name;
+                $user->auth_key = substr(md5(md5($name)), 2, 6);
+                $user->access_token = md5($user->pass);
+                $user->save();
+            }
+        }
+    }
+
+
+    public function actionRunchecker() {
+        $count = Solution::find()->count();
+
+        $solutions = Solution::find()->all();
+        $i = 0;
+        foreach ($solutions as $solution) {
+            try {
+                $i++;
+                $tester = TesterFactory::create($solution);
+                $solution->parseResult($tester->getResult());
+                echo "Solution #{$solution->id} by user #{$solution->user->id} checked.   ($i of $count)\n";
+            } catch(Exception $e) {
+                echo "Solution #{$solution->id} error: ". $e->getMessage() .".   ($i of $count)\n";
+            }
+        }
+    }
 
 }
