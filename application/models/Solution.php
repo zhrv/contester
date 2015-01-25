@@ -148,6 +148,9 @@ class Solution extends \yii\db\ActiveRecord
     }
 
     public function parseResult($json) {
+        $pos = strpos($json, '{"status"');
+        $json = substr($json, $pos);
+
         $this->result = $json;
         $this->status = 0;
         $this->score = 0;
@@ -155,8 +158,6 @@ class Solution extends \yii\db\ActiveRecord
 
         Yii::$app->db->createCommand()->delete('tests', ['sid' => $this->id])->execute();
 
-        $pos = strpos($json, '{"status"');
-        $json = substr($json, $pos);
 
         $result = json_decode($json);
         if (!isset($result->status)) {

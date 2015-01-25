@@ -65,11 +65,8 @@ class ContestController extends Controller
             throw new HttpException(404, 'Турнир не существует...');
         }
         $curTime = time();
-        if ($curTime < $contest->start_at) {
-            throw new HttpException(503, 'Турнир не начался...');
-        }
-        if ($curTime > $contest->finish_at) {
-            throw new HttpException(503, 'Турнир завершен...');
+        if ($curTime < $contest->start_at || $curTime > $contest->finish_at || $contest->status != Contest::STATUS_ACTIVE) {
+            throw new HttpException(503, 'Турнир не активен...');
         }
         $model = new SolutionForm();
         if ($model->load(Yii::$app->request->post())) {

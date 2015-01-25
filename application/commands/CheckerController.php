@@ -74,6 +74,16 @@ class CheckerController extends Controller
         }
     }
 
+    public function actionSecondtour() {
+        $users = User::find()
+            ->where('id<>1')
+            ->all();
+        foreach ($users as $user) {
+            $user->pass = substr(md5($user->login . $user->access_token), 5, 8);
+            $user->save();
+        }
+    }
+
 
     public function actionRunall() {
         $count = Solution::find()->count();
@@ -85,6 +95,7 @@ class CheckerController extends Controller
             $i++;
             echo "Solution #{$solution->id} of task #{$solution->tid} by user '{$solution->user->login}' (#{$solution->user->id})  ($i of $count):\n";
             try {
+                if ($solution->id < 191) continue;
                 $tester = TesterFactory::create($solution);
                 $solution->parseResult($tester->getResult());
                 echo  "    checked.\n";

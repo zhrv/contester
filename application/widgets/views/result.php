@@ -88,15 +88,15 @@ foreach ($tasks as $task) {
         $row4 .= '<td align="center" colspan="'. $cnt .'">'. $group['score'] .'</td>';
         $totalScore += $group['score'];
     }
-    $result = '<div class="panel panel-default"><div class="panel-heading"><h4>'. $task['title'] .'</h4></div><div class="panel-body">';
+    $result = '<h4>'. $task['title'] .'</h4>';
     $result .= '<table class="table-bordered">';
     $result .= '<tr>'. $row1 .'</tr>';
     $result .= '<tr>'. $row2 .'</tr>';
     $result .= '<tr>'. $row3 .'</tr>';
     $result .= '<tr>'. $row4 .'</tr>';
-    $result .= "<tr><th>ИТОГО</th><td align=\"center\" colspan=\"{$testCnt}\"><strong style=\"color:green; font-size:1.5em;\">{$totalScore}</strong></td></tr>";
-    $result .= "<tr><th>hash</th><td align=\"center\" colspan=\"{$testCnt}\">{$task['hash']}</td><tr>";
-    $result .= '</table></div></div>';
+    $result .= "<tr><th>ИТОГО</th><td colspan=\"{$testCnt}\"><strong style=\"color:green; font-size:1.5em;\">{$totalScore}</strong></td></tr>";
+    $result .= "<tr><th>hash</th><td colspan=\"{$testCnt}\">{$task['hash']}</td><tr>";
+    $result .= '</table>';
     $result .= '';
     echo $result;
 }

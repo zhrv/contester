@@ -27,6 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'start_at')->textInput() ?>
     <?= $form->field($model, 'finish_at')->textInput() ?>
+    <?= $form->field($model, 'status')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
