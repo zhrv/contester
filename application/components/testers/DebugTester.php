@@ -26,7 +26,7 @@ class DebugTester extends BaseTester{
         $dir = $this->solution->getCompileDir();
 
 
-        $srcFile = 'src_'. $this->solution->uid .'_'. $this->solution->tid . Lang::getFileExtension($this->solution->lid);
+        $srcFile = 'src_'. $this->solution->uid .'_'. $this->solution->tid .'_'. time() . Lang::getFileExtension($this->solution->lid);
 
         $fp = fopen($dir . $srcFile, 'w');
         if (!$fp) {

@@ -5,6 +5,8 @@ namespace app\models;
 use app\helpers\File;
 use Yii;
 use yii\base\Exception;
+use yii\base\ErrorException;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "solutions".
@@ -239,6 +241,14 @@ class Solution extends \yii\db\ActiveRecord
         if (!isset($this->id)) {
             throw new Exception('Solution not saved.');
         }
-        File::rmdir($this->getCompileDir());
+        try {
+            File::rmdir($this->getCompileDir());
+        }
+        catch (Exception $e) {
+            Yii::getLogger()->log('Произошла ошибка: '. $e->getMessage(), Logger::LEVEL_WARNING);
+        }
+        catch (ErrorException $e) {
+            Yii::getLogger()->log('Произошла ошибка: '. $e->getMessage(), Logger::LEVEL_WARNING);
+        }
     }
 }

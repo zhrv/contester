@@ -7,12 +7,15 @@
 
 namespace app\commands;
 
+use Yii;
 use app\components\testers\TesterFactory;
 use app\models\Solution;
 use app\models\User;
 use yii\base\ErrorException;
 use yii\console\Controller;
 use yii\base\Exception;
+use yii\log\Logger;
+
 
 /**
  * This command echoes the first argument that you have entered.
@@ -78,15 +81,26 @@ class CheckerController extends Controller
         $solutions = Solution::find()->all();
         $i = 0;
         foreach ($solutions as $solution) {
+            $start = time();
             $i++;
             echo "Solution #{$solution->id} of task #{$solution->tid} by user '{$solution->user->login}' (#{$solution->user->id})  ($i of $count):\n";
             try {
                 $tester = TesterFactory::create($solution);
                 $solution->parseResult($tester->getResult());
                 echo  "    checked.\n";
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 echo "    error: ". $e->getMessage() ."\n";
+                Yii::getLogger()->log("Solution #{$solution->id} of task #{$solution->tid} by user '{$solution->user->login}' (#{$solution->user->id}). Произошла ошибка: ". $e->getMessage(), Logger::LEVEL_ERROR);
+            } catch (ErrorException $e) {
+                echo "    error: ". $e->getMessage() ."\n";
+                Yii::getLogger()->log("Solution #{$solution->id} of task #{$solution->tid} by user '{$solution->user->login}' (#{$solution->user->id}). Произошла ошибка: ". $e->getMessage(), Logger::LEVEL_ERROR);
             }
+            catch (\Exception $e) {
+                echo "    error: ". $e->getMessage() ."\n";
+                Yii::getLogger()->log("Solution #{$solution->id} of task #{$solution->tid} by user '{$solution->user->login}' (#{$solution->user->id}). Произошла ошибка: ". $e->getMessage(), Logger::LEVEL_ERROR);
+            }
+            $end = time();
+            echo '    time: '. ($end-$start) ." ms\n\n";
         }
     }
 

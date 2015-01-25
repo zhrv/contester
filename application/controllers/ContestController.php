@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Solution;
 use app\models\Test;
 use Yii;
+use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -99,6 +100,9 @@ class ContestController extends Controller
                     Yii::$app->getSession()->setFlash('success', 'Решение сохранено. Hash: '. $md5);
                 }
                 catch (Exception $e) {
+                    Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
+                }
+                catch (ErrorException $e) {
                     Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
                 }
             } else {

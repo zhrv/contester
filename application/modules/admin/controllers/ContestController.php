@@ -15,6 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\testers\TesterFactory;
 use yii\base\Exception;
+use yii\base\ErrorException;
 
 /**
  * ContestController implements the CRUD actions for Contest model.
@@ -271,13 +272,16 @@ class ContestController extends Controller
         try {
             $tester = TesterFactory::create($solution);
             $solution->parseResult($tester->getResult());
-            Yii::$app->getSession()->setFlash('success', 'Решение Решение перепроверено.');
-            return $this->redirect(['user', 'contestId' => $solution->task->cid, 'userId' => $solution->uid]);
+            Yii::$app->getSession()->setFlash('success', 'Решение перепроверено.');
         }
         catch (Exception $e) {
             Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
-            return $this->redirect(['user', 'contestId' => $solution->task->cid, 'userId' => $solution->uid]);
+
         }
+        catch (ErrorException $e) {
+            Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
+        }
+        return $this->redirect(['user', 'contestId' => $solution->task->cid, 'userId' => $solution->uid]);
     }
 
     public function actionTest($id) {
