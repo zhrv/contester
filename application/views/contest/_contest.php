@@ -6,10 +6,9 @@
  * Time: 21:03
  */
 ?>
-<div>
+
     <?php if ($model->active): ?>
-    <a href="<?= yii\helpers\Url::to(['contest/contest', 'id' => $model->id]) ?>"><?= $model->name ?></a>
+    <p><a href="<?= yii\helpers\Url::to(['contest/contest', 'id' => $model->id]) ?>"><span class="glyphicon glyphicon-ok"></span> <?= $model->name ?> </a></p>
     <?php else: ?>
-        <?= $model->name ?>
+        <p><span class="glyphicon glyphicon-remove"></span> <?= $model->name ?> </p>
     <?php endif; ?>
-</div>

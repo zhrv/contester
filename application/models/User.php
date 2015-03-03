@@ -48,6 +48,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'login' => 'Login',
             'pass' => 'Pass',
             'name' => 'Name',
+            'city' => 'Населенный пункт',
+            'neighborhood' => 'Район',
+            'school' => 'Школа',
+            'class' => 'Класс',
+            'teacher' => 'Учитель',
             'auth_key' => 'Auth Key',
             'access_token' => 'Access Token',
             'created_at' => 'Created At',
@@ -90,7 +95,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->pass === $password;
+        return $this->pass === md5($password);
     }
 
     /**
@@ -155,5 +160,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         } else {
             return '';
         }
+    }
+
+    public function asArray()
+    {
+        return [
+            'login'         => $this->login,
+            'email'         => $this->email,
+            'name'          => $this->name,
+            'surname'       => $this->surname,
+            'patronymic'    => $this->patronymic,
+            'city'          => $this->city,
+            'neighborhood'  => $this->neighborhood,
+            'school'        => $this->school,
+            'class'         => $this->class,
+            'teacher'       => $this->teacher,
+        ];
     }
 }

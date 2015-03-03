@@ -26,6 +26,7 @@ use Yii;
 class Task extends \yii\db\ActiveRecord
 {
     public $file;
+    public $prFile;
     /**
      * @inheritdoc
      */
@@ -103,6 +104,10 @@ class Task extends \yii\db\ActiveRecord
 
     public function getTestsDir() {
         return Yii::getAlias(Yii::$app->params['testsDir']).'/'.$this->contest->id.'/'.$this->id;
+    }
+
+    public function getProblemsDir() {
+        return Yii::getAlias(Yii::$app->params['problemsDir']).'/'.$this->contest->id.'/'.$this->id;
     }
 
     /**

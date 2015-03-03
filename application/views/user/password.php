@@ -1,18 +1,23 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\widgets\Alert;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
 
-$this->title = 'Login';
+$this->title = 'Пользователь';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
+    <?= Alert::widget([
+        'options' => [
+            'class' => 'alert-info',
+        ],
+    ]) ?>
+    <!--p>Please fill out the following fields to login:</p-->
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
@@ -23,17 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'login') ?>
+    <?= $form->field($model, 'pass')->passwordInput() ?>
+    <?= $form->field($model, 'newPass')->passwordInput() ?>
+    <?= $form->field($model, 'newPassRe')->passwordInput() ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
-
-    <?= $form->field($model, 'rememberMe', [
+    <!--?= $form->field($model, 'rememberMe', [
         'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-    ])->checkbox() ?>
+    ])->checkbox() ?-->
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <?= Html::submitButton('Сменить', ['class' => 'btn btn-danger', 'name' => 'register-button']) ?>
         </div>
     </div>
 

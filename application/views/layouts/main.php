@@ -19,14 +19,16 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link href="<?= Yii::$app->homeUrl ?>css/prettify.css" type="text/css" rel="stylesheet" />
+    <script src="<?= Yii::$app->homeUrl ?>js/google-code-prettify/prettify.js"></script>
 </head>
-<body>
+<body onload="prettyPrint()">
 
 <?php $this->beginBody() ?>
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'Contester',
+                'brandLabel' => 'Турниры',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,10 +38,23 @@ AppAsset::register($this);
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                     Yii::$app->user->isGuest ?
-                        ['label' => 'Войти', 'url' => ['/site/login']] :
-                        ['label' => 'Выйти (' . Yii::$app->user->identity->login . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
+                        ['label' => 'Войти', 'url' => ['/user/login']] :
+                        [
+                            'encode' => false,
+                            'label' => '<i class="glyphicon glyphicon-user"></i> '. Yii::$app->user->identity->login,
+                            'items' => [
+                                [
+                                    'label' => 'Профиль',
+                                    'url' => ['/user/update'],
+                                    'linkOptions' => ['data-method' => 'post'],
+                                ],
+                                [
+                                    'label' => 'Выйти',
+                                    'url' => ['/user/logout'],
+                                    'linkOptions' => ['data-method' => 'post'],
+                                ],
+                            ],
+                        ],
                 ],
             ]);
             NavBar::end();
@@ -47,6 +62,7 @@ AppAsset::register($this);
 
         <div class="container">
             <?= Breadcrumbs::widget([
+                'homeLink' => ['label' => 'Главная', 'link' => Yii::$app->homeUrl],
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
             <?= $content ?>
