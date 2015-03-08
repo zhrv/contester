@@ -107,7 +107,7 @@ class TaskController extends Controller
                     }
                     $name = $model->prFile->baseName . (!empty($model->prFile->extension) ? ('.' . $model->prFile->extension) : '');
                     if (!empty($model->pdf) && file_exists($dir . '/' . $model->pdf)) //@todo возможно затереть файл другой задачи, ИСПРАВИТЬ!!!
-                        unlink($dir . '/' . $model->checker);
+                        unlink($dir . '/' . $model->pdf);
                     $model->prFile->saveAs($dir . '/' . $name);
                     $model->pdf = $name;
                 }
@@ -158,7 +158,7 @@ class TaskController extends Controller
                     }
                     $name = $model->prFile->baseName . (!empty($model->prFile->extension) ? ('.' . $model->prFile->extension) : '');
                     if (!empty($model->pdf) && file_exists($dir . '/' . $model->pdf)) //@todo возможно затереть файл другой задачи, ИСПРАВИТЬ!!!
-                        unlink($dir . '/' . $model->checker);
+                        unlink($dir . '/' . $model->pdf);
                     $model->prFile->saveAs($dir . '/' . $name);
                     $model->pdf = $name;
 

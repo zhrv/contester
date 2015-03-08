@@ -20,7 +20,7 @@ $this->title = 'Результаты';
             <div class="col-lg-9">
 
                 <ul class="nav nav-tabs nav-justified">
-                    <li role="presentation"><?= Html::a('<span class="glyphicon glyphicon-cloud-upload"></span> Отослать', ['contest/contest', 'id' => $contest->id], ['class' => 'h4']) ?></li>
+                    <li role="presentation"><?= Html::a('<span class="glyphicon glyphicon-cloud-upload"></span> Отправить решение', ['contest/contest', 'id' => $contest->id], ['class' => 'h4']) ?></li>
                     <li role="presentation" class="active"><?= Html::a('<span class="glyphicon glyphicon-list-alt"></span> Результаты', ['contest/result', 'id' => $contest->id], ['class' => 'h4']) ?></li>
                 </ul>
                 <p></p><p></p>
