@@ -24,6 +24,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'file')->fileInput() ?>
 
+    <?= $form->field($model, 'prFile')->fileInput() ?>
+
     <?= $form->field($model, 'time_limit')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'memory_limit')->textInput(['maxlength' => 255]) ?>

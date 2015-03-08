@@ -87,16 +87,30 @@ class TaskController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $model->file = UploadedFile::getInstance($model, 'file');
-            if ($model->validate() && $model->file) {
-                $dir = $model->getTestsDir();
-                if (!(file_exists($dir) && is_dir($dir))) {
-                    mkdir($dir, 0777, true);
+            $model->prFile = UploadedFile::getInstance($model, 'prFile');
+            if ($model->validate()) {
+                if ($model->file) {
+                    $dir = $model->getTestsDir();
+                    if (!(file_exists($dir) && is_dir($dir))) {
+                        mkdir($dir, 0777, true);
+                    }
+                    $name = $model->file->baseName . (!empty($model->file->extension) ? ('.' . $model->file->extension) : '');
+                    if (!empty($model->checker) && file_exists($dir . '/' . $model->checker)) //@todo возможно затереть файл другой задачи, ИСПРАВИТЬ!!!
+                        unlink($dir . '/' . $model->checker);
+                    $model->file->saveAs($dir . '/' . $name);
+                    $model->checker = $name;
                 }
-                $name = $model->file->baseName . (!empty($model->file->extension) ? ('.' . $model->file->extension) : '');
-                if (!empty($model->checker) && file_exists($dir . '/' . $model->checker)) //@todo возможно затереть файл другой задачи, ИСПРАВИТЬ!!!
-                    unlink($dir . '/' . $model->checker);
-                $model->file->saveAs($dir .'/'. $name);
-                $model->checker = $name;
+                if ($model->prFile) {
+                    $dir = $model->getProblemsDir();
+                    if (!(file_exists($dir) && is_dir($dir))) {
+                        mkdir($dir, 0777, true);
+                    }
+                    $name = $model->prFile->baseName . (!empty($model->prFile->extension) ? ('.' . $model->prFile->extension) : '');
+                    if (!empty($model->pdf) && file_exists($dir . '/' . $model->pdf)) //@todo возможно затереть файл другой задачи, ИСПРАВИТЬ!!!
+                        unlink($dir . '/' . $model->checker);
+                    $model->prFile->saveAs($dir . '/' . $name);
+                    $model->pdf = $name;
+                }
             }
 
             if ($model->save()) {
@@ -124,16 +138,32 @@ class TaskController extends Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            if ($model->validate() && $model->file) {
-                $dir = $model->getTestsDir();
-                if (!(file_exists($dir) && is_dir($dir))) {
-                    mkdir($dir, 0777, true);
+            $model->prFile = UploadedFile::getInstance($model, 'prFile');
+            if ($model->validate()) {
+                if ($model->file) {
+                    $dir = $model->getTestsDir();
+                    if (!(file_exists($dir) && is_dir($dir))) {
+                        mkdir($dir, 0777, true);
+                    }
+                    $name = $model->file->baseName . (!empty($model->file->extension) ? ('.' . $model->file->extension) : '');
+                    if (!empty($model->checker) && file_exists($dir . '/' . $model->checker))
+                        unlink($dir . '/' . $model->checker);
+                    $model->file->saveAs($dir . '/' . $name);
+                    $model->checker = $name;
                 }
-                $name = $model->file->baseName . (!empty($model->file->extension) ? ('.' . $model->file->extension) : '');
-                if (!empty($model->checker) && file_exists($dir . '/' . $model->checker))
-                    unlink($dir . '/' . $model->checker);
-                $model->file->saveAs($dir .'/'. $name);
-                $model->checker = $name;
+                if ($model->prFile) {
+                    $dir = $model->getProblemsDir();
+                    if (!(file_exists($dir) && is_dir($dir))) {
+                        mkdir($dir, 0777, true);
+                    }
+                    $name = $model->prFile->baseName . (!empty($model->prFile->extension) ? ('.' . $model->prFile->extension) : '');
+                    if (!empty($model->pdf) && file_exists($dir . '/' . $model->pdf)) //@todo возможно затереть файл другой задачи, ИСПРАВИТЬ!!!
+                        unlink($dir . '/' . $model->checker);
+                    $model->prFile->saveAs($dir . '/' . $name);
+                    $model->pdf = $name;
+
+                }
+
             }
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);

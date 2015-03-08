@@ -92,21 +92,11 @@ class ContestController extends Controller
             $solution->code = $model->code;
             $solution->created_at = time();
             $solution->hash = $md5;
+            $solution->status = 0;
+            $solution->result = "";
             $solution->save();
 
-            if (isset($solution->id)) {
-                $tester = TesterFactory::create($solution);
-                try {
-                    $solution->parseResult($tester->getResult());
-                    Yii::$app->getSession()->setFlash('success', 'Решение сохранено. Hash: '. $md5);
-                }
-                catch (Exception $e) {
-                    Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
-                }
-                catch (ErrorException $e) {
-                    Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
-                }
-            } else {
+            if (!isset($solution->id)) {
                 Yii::$app->getSession()->setFlash('error', 'Произошли ошибки при сохранении решения!');
             }
 
@@ -125,79 +115,111 @@ class ContestController extends Controller
             throw new HttpException(404, 'Турнир не существует...');
         }
 
-//        return $this->render('result', [
-//            'contest' => $contest,
-//        ]);
-
-
+        $resVals = Test::getResultsByName();
 
         $tasksArr = [];
         $tasks = Task::find()
             ->where(['cid' => $contest->id])
             ->orderBy('id')
             ->all();
+
         foreach ($tasks as $task) {
-
-
-
-
             $sol = Solution::find()
                 ->with('tests')
                 ->where(['tid' => $task->id, 'uid' => Yii::$app->user->identity->getId()])
                 //->orderBy('created_at desc')
                 ->limit(1)
                 ->one();
+            if (!$sol) continue;
 
             $testsArr = [];
-            if ($sol) {
-                foreach ($sol->task->checkergroups as $group) {
-                    $tests = Test::find()
-                        ->leftJoin('checkertests', 'checkertests.id = tests.cid')
-                        ->where(['tests.sid' => $sol->id, 'checkertests.gid' => $group->id])
-                        ->all();
-
-                    $gr = [];
-                    $ok = true;
-                    $notEmpty = false;
-                    $gr['tests'] = [];
-                    $gr['score'] = 0;
-                    $grScore = 0;
-                    foreach ($tests as $test) {
-                        $notEmpty = true;
-                        $gr['tests'][] = [
-                            'num' => $test->num,
-                            'res' => $test->res,
-                        ];
-                        if ($test->res == Test::RESULT_OK) {
-
-                            $grScore += $test->checkertest->scores;
-                        } elseif ($test->checkertest->checkergroup->method == Checkergroup::METHOD_TOTAL) {
-                            $ok = false;
-                            //break;
-                        }
-                    }
-                    if ($ok && $notEmpty) {
-                        if ($group->method == Checkergroup::METHOD_TOTAL) {
-                            $gr['score'] = $group->scores;
-                        }
-                        else {
-                            $gr['score'] = $grScore;
-                        }
-                    }
-                    //$gr['score'] = $ok ? $grScore : 0;
-
-                    $testsArr[] = $gr;
+            if (!empty($sol->result)) {
+                $res = json_decode($sol->result);
+                $tests = [];
+                foreach ($res->report as $resItem) {
+                    $tests[$resItem->id] = $resItem;
                 }
+                $num = 0;
+                if (isset($res->status) && $res->status=="ok") {
+                    foreach ($sol->task->checkergroups as $group) {
+                        $gr = [];
+                        $ok = true;
+                        $notEmpty = false;
+                        $gr['tests'] = [];
+                        $gr['score'] = 0;
+                        $grScore = 0;
+                        foreach ($group->checkertests as $chtest) {
+                            $t = $tests[$chtest->id];
+                            $notEmpty = true;
+
+                            $gr['tests'][] = [
+                                'num' => ++$num,
+                                'res' => $resVals[$t->result],
+                            ];
+                            if ($resVals[$t->result] == Test::RESULT_OK) {
+
+                                $grScore += $chtest->scores;
+                            } elseif ($group->method == Checkergroup::METHOD_TOTAL) {
+                                $ok = false;
+                                //break;
+                            }
+                        }
+                        if ($ok && $notEmpty) {
+                            if ($group->method == Checkergroup::METHOD_TOTAL) {
+                                $gr['score'] = $group->scores;
+                            } else {
+                                $gr['score'] = $grScore;
+                            }
+                        }
+                        //$gr['score'] = $ok ? $grScore : 0;
+
+                        $testsArr[] = $gr;
+                    }
 
 
-
+                    $tasksArr[] = [
+                        'id' => $task->id,
+                        'title' => $task->title,
+                        'content' => $task->content,
+                        'hash' => $sol->hash,
+                        'solution' => $sol,
+                        'tests' => $testsArr,
+                        'status' => "ok",
+                    ];
+                } else {
+                    $status = "bad";
+                    if (!isset($res->status) && $sol->status == 0) {
+                        $status = "in_queue";
+                    }
+                    if (!isset($res->status) && $sol->status != 0) {
+                        $status = "error";
+                    }
+                    $tasksArr[] = [
+                        'id' => $task->id,
+                        'title' => $task->title,
+                        'content' => $task->content,
+                        'hash' => $sol->hash,
+                        'tests' => $testsArr,
+                        'solution' => $sol,
+                        'status' => $status,
+                    ];
+                }
+            } else {
+                $status = "bad";
+                if ($sol->status == 0) {
+                    $status = "in_queue";
+                }
+                if ($sol->status != 0) {
+                    $status = "error";
+                }
                 $tasksArr[] = [
                     'id' => $task->id,
                     'title' => $task->title,
                     'content' => $task->content,
                     'hash' => $sol->hash,
-                    'solution' => $sol,
                     'tests' => $testsArr,
+                    'solution' => $sol,
+                    'status' => $status,
                 ];
             }
 
@@ -250,6 +272,26 @@ class ContestController extends Controller
         ]);
 
 
+    }
+
+    public function actionProblem($id)
+    {
+        $model = Task::findOne($id);
+        if (!$model) {
+            throw new HttpException(404, "Условие указанной задачи не найдено");
+        }
+        $fileName = $model->getProblemsDir() .'/'. $model->pdf;
+        // Будем передавать PDF
+        header('Content-Type: application/pdf');
+
+        // Который будет называться downloaded.pdf
+        header('Content-Disposition: inline; filename="problem_'. $id .'.pdf"');
+
+        // Исходный PDF файл original.pdf
+        if (!file_exists($fileName)) {
+            throw new HttpException(404, "Файл не найден...");
+        }
+        readfile($fileName);
     }
 
 }

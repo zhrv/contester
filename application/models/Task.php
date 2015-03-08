@@ -44,7 +44,7 @@ class Task extends \yii\db\ActiveRecord
             [['cid'], 'required'],
             [['cid'], 'integer'],
             [['content'], 'string'],
-            [['file'], 'file'],
+            [['file', 'prFile'], 'file'],
             //[['file'], 'required'],
             [['title', 'input', 'output', 'checker', 'time_limit', 'memory_limit'], 'string', 'max' => 255]
         ];
@@ -65,7 +65,9 @@ class Task extends \yii\db\ActiveRecord
             'checker' => 'Checker',
             'time_limit' => 'Time Limit',
             'memory_limit' => 'Memory Limit',
-            'file' => 'Checker file'
+            'file' => 'Checker file',
+            'pdf' => 'Условие задачи',
+            'prFile' => 'Условие задачи',
         ];
     }
 

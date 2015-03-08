@@ -167,6 +167,8 @@ class ContestController extends Controller
         $contest = Contest::findOne(['id' => $contestId]);
         $user = User::findOne(['id' => $userId]);
 
+        $resVals = Test::getResultsByName();
+
         $tasksArr = [];
         $tasks = Task::find()
             ->where(['cid' => $contestId])
@@ -178,64 +180,101 @@ class ContestController extends Controller
 
 
             $sol = Solution::find()
-                ->with('tests')
+                ->with('task')
                 ->where(['tid' => $task->id, 'uid' => $userId])
                 //->orderBy('created_at desc')
                 ->limit(1)
                 ->one();
+            if (!$sol) continue;
 
             $testsArr['solution'] = $sol;
             $testsArr['tests'] = [];
-            if ($sol) {
-                foreach ($sol->task->checkergroups as $group) {
-                    $tests = Test::find()
-                        ->leftJoin('checkertests', 'checkertests.id = tests.cid')
-                        ->where(['tests.sid' => $sol->id, 'checkertests.gid' => $group->id])
-                        ->all();
+            if (!empty($sol->result)) {
+                $res = json_decode($sol->result);
+                $tests = [];
+                foreach ($res->report as $resItem) {
+                    $tests[$resItem->id] = $resItem;
+                }
+                $num = 0;
+                if (isset($res->status) && $res->status=="ok") {
+                    foreach ($sol->task->checkergroups as $group) {
+                        $gr = [];
+                        $ok = true;
+                        $notEmpty = false;
+                        $gr['tests'] = [];
+                        $gr['score'] = 0;
+                        $grScore = 0;
+                        foreach ($group->checkertests as $chtest) {
+                            $t = $tests[$chtest->id];
+                            $notEmpty = true;
 
-                    $gr = [];
-                    $ok = true;
-                    $gr['score'] = 0;
-                    $gr['tests'] = [];
-                    $grScore = 0;
-                    $notEmpty = false;
-                    foreach ($tests as $test) {
-                        $notEmpty = true;
-                        $gr['tests'][] = [
-                            'num' => $test->num,
-                            'res' => $test->res,
-                        ];
-                        if ($test->res == Test::RESULT_OK) {
+                            $gr['tests'][] = [
+                                'num' => ++$num,
+                                'res' => $resVals[$t->result],
+                            ];
+                            if ($resVals[$t->result] == Test::RESULT_OK) {
 
-                            $grScore += $test->checkertest->scores;
-                        } elseif ($group->method == Checkergroup::METHOD_TOTAL) {
-                            $ok = false;
-                            //break;
+                                $grScore += $chtest->scores;
+                            } elseif ($group->method == Checkergroup::METHOD_TOTAL) {
+                                $ok = false;
+                                //break;
+                            }
                         }
+                        if ($ok && $notEmpty) {
+                            if ($group->method == Checkergroup::METHOD_TOTAL) {
+                                $gr['score'] = $group->scores;
+                            } else {
+                                $gr['score'] = $grScore;
+                            }
+                        }
+                        //$gr['score'] = $ok ? $grScore : 0;
+
+                        $testsArr['tests'][] = $gr;
                     }
-
-                    if ($ok && $notEmpty) {
-                        if ($group->method == Checkergroup::METHOD_TOTAL) {
-                            $gr['score'] = $group->scores;
-                        }
-                        else {
-                            $gr['score'] = $grScore;
-                        }
+                    $tasksArr[] = [
+                        'id' => $task->id,
+                        'title' => $task->title,
+                        'content' => $task->content,
+                        'hash' => $sol->hash,
+                        'tests' => $testsArr,
+                        'status' => 'ok',
+                    ];
+                } else {
+                    $status = "bad";
+                    if (!isset($res->status) && $sol->status == 0) {
+                        $status = "in_queue";
                     }
-                    //$gr['score'] = $ok ? $grScore : 0;
-
-                    $testsArr['tests'][] = $gr;
+                    if (!isset($res->status) && $sol->status != 0) {
+                        $status = "error";
+                    }
+                    $tasksArr[] = [
+                        'id' => $task->id,
+                        'title' => $task->title,
+                        'content' => $task->content,
+                        'hash' => $sol->hash,
+                        'tests' => $testsArr,
+                        'status' => $status,
+                    ];
                 }
 
 
-
+            } else {
+                $status = "bad";
+                if ($sol->status == 0) {
+                    $status = "in_queue";
+                }
+                if ($sol->status != 0) {
+                    $status = "error";
+                }
                 $tasksArr[] = [
                     'id' => $task->id,
                     'title' => $task->title,
                     'content' => $task->content,
                     'hash' => $sol->hash,
                     'tests' => $testsArr,
+                    'status' => $status,
                 ];
+
             }
 
         }
@@ -269,7 +308,10 @@ class ContestController extends Controller
 
     public function actionCheck($id) {
         $solution = Solution::findOne($id);
-        try {
+        $solution->status = 0;
+        $solution->result = '';
+        $solution->save();
+        /*try {
             $tester = TesterFactory::create($solution);
             $solution->parseResult($tester->getResult());
             Yii::$app->getSession()->setFlash('success', 'Решение перепроверено.');
@@ -280,7 +322,7 @@ class ContestController extends Controller
         }
         catch (ErrorException $e) {
             Yii::$app->getSession()->setFlash('error', 'Произошла ошибка: '. $e->getMessage());
-        }
+        }*/
         return $this->redirect(['user', 'contestId' => $solution->task->cid, 'userId' => $solution->uid]);
     }
 

@@ -12,7 +12,7 @@
     </div>
     <ul class="list-group">
     <?php foreach ($tasks as $task): ?>
-        <li class="list-group-item"><?= \yii\helpers\Html::a('<span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;'. $task->title, ['']) ?></li>
+        <li class="list-group-item"><?= \yii\helpers\Html::a('<span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;'. $task->title, ['contest/problem', 'id' => $task->id]) ?></li>
     <?php endforeach; ?>
     </ul>
 </div>
